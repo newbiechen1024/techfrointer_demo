@@ -55,15 +55,21 @@ public class ArticleBriefFragment extends BaseFragment implements SwipeRefreshLa
         super.onResume();
         //先从数据库获取数据
         mAdapter.addItems(mBriefDao.getArticleBriefs("20","0"));
-      /*  //从网络获取数据
+        //从网络获取数据
         mHandler.post(new Runnable() {
             @Override
             public void run() {
                 //自动滚动。
-                //加载数据
+                mSwipeRefreshLayout.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeRefreshLayout.setRefreshing(true);
+                    }
+                });
+               //加载数据
                 onRefresh();
             }
-        });*/
+        });
     }
 
     @Override

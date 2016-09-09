@@ -45,7 +45,6 @@ public class HttpConnection {
 
     public <T> void sendGetRequest(final URL url, final Parse<T> parse, final CallBack<T> callBack){
         new AsyncTask<Void,Void,T>(){
-
             @Override
             protected T doInBackground(Void... params) {
                 String response = null;
@@ -61,6 +60,7 @@ public class HttpConnection {
                     Log.d(TAG,response);
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Log.d(TAG,"连接超时");
                 } finally {
                     connection.disconnect();
                 }

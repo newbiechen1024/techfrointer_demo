@@ -3,6 +3,7 @@ package com.newbiechen.techfrontierdemo;
 import android.app.Application;
 
 import com.newbiechen.techfrontierdemo.HttpUtils.HttpConnection;
+import com.newbiechen.techfrontierdemo.Utils.ToastUtils;
 
 /**
  * Created by PC on 2016/9/9.
@@ -15,5 +16,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         HttpConnection.init();
+        ToastUtils.init(getApplicationContext());
     }
 }

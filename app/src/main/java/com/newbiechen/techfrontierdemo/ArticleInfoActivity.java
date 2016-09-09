@@ -29,7 +29,12 @@ public class ArticleInfoActivity extends BaseActivity {
 
     @Override
     protected void initClick() {
-
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override

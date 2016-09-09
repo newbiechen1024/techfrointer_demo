@@ -1,6 +1,9 @@
 package com.newbiechen.techfrontierdemo.HttpUtils.ParseData;
 
+import android.widget.Toast;
+
 import com.newbiechen.techfrontierdemo.HttpUtils.Parse;
+import com.newbiechen.techfrontierdemo.Utils.ToastUtils;
 import com.newbiechen.techfrontierdemo.beans.ArticleBrief;
 
 import org.json.JSONArray;
