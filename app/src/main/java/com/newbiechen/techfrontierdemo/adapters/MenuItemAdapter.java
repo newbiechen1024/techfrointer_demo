@@ -1,6 +1,7 @@
 package com.newbiechen.techfrontierdemo.adapters;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -21,17 +22,7 @@ public class MenuItemAdapter extends Adapter<MenuItemAdapter.MenuItemViewHolder>
     private static final int [] MENU_ICON = {R.drawable.article,R.drawable.about,R.drawable.exit};
     private static final int [] MENU_CONTENT = {R.string.article,R.string.about,R.string.exit};
     private final List<MenuItem> mMenuItemList = new ArrayList<>();
-
-    public MenuItemAdapter() {
-        //添加菜单的数据
-        for (int i=0; i< MENU_ICON.length; ++i){
-            MenuItem menuItem = new MenuItem();
-            menuItem.setIconId(MENU_ICON[i]);
-            menuItem.setContentId(MENU_CONTENT[i]);
-            mMenuItemList.add(menuItem);
-        }
-    }
-
+    private OnItemClickListener mItemClickListener;
     @Override
     public MenuItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_menu_item,
@@ -44,6 +35,23 @@ public class MenuItemAdapter extends Adapter<MenuItemAdapter.MenuItemViewHolder>
         MenuItem menuItem = mMenuItemList.get(position);
         holder.ivIcon.setImageResource(menuItem.getIconId());
         holder.tvContent.setText(menuItem.getContentId());
+        setUpOnClickListener(holder.itemView,position);
+    }
+
+    /**
+     * 设置监听器
+     * @param view
+     * @param position
+     */
+    private void setUpOnClickListener(final View view, final int position){
+        if (mItemClickListener != null){
+            view.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mItemClickListener.itemClick(view,position);
+                }
+            });
+        }
     }
 
     @Override
@@ -58,10 +66,25 @@ public class MenuItemAdapter extends Adapter<MenuItemAdapter.MenuItemViewHolder>
             super(itemView);
             ivIcon = getViewById(itemView,R.id.menu_item_iv_icon);
             tvContent = getViewById(itemView,R.id.menu_item_tv_content);
+            //设置点击后的背景颜色
+            itemView.setBackgroundResource(R.drawable.recycler_click);
         }
 
         public <VT> VT getViewById(View view,int id){
             return (VT) view.findViewById(id);
         }
+    }
+
+    public interface OnItemClickListener{
+        void itemClick(View view,int pos);
+    }
+    /*************************公共方法*************************/
+    public void addMenuItems(List<MenuItem> menuItems ){
+        mMenuItemList.addAll(menuItems);
+        notifyDataSetChanged();
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mItemClickListener = listener;
     }
 }

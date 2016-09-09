@@ -1,6 +1,7 @@
 package com.newbiechen.techfrontierdemo;
 
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.newbiechen.techfrontierdemo.adapters.MenuItemAdapter;
 import com.newbiechen.techfrontierdemo.base.BaseActivity;
 import com.newbiechen.techfrontierdemo.beans.MenuItem;
+import com.newbiechen.techfrontierdemo.fragemnt.AboutFragment;
 import com.newbiechen.techfrontierdemo.fragemnt.ArticleBriefFragment;
 
 import java.util.ArrayList;
@@ -26,26 +28,24 @@ import java.util.concurrent.ExecutorService;
 public class MainActivity extends BaseActivity {
     private Toolbar mToolbar;
     private RecyclerView mRecyclerSlideMenu;
+    private MenuItemAdapter mMenuItemAdapter;
     private DrawerLayout mDrawerLayout;
-    private FrameLayout mFrameLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ArticleBriefFragment mArticleBriefFragment;
+    private AboutFragment mAboutFragment;
     @Override
     protected void onCreateView() {
         setContentView(R.layout.activity_main);
 
-        mToolbar = getViewById(R.id.main_toolbar);
+        mToolbar = getViewById(R.id.toolbar);
         mDrawerLayout = getViewById(R.id.main_drawer);
         mRecyclerSlideMenu = getViewById(R.id.drawer_recycler_menu);
-        mFrameLayout = getViewById(R.id.main_frame_content);
-        //将Toolbar关联到Activity上
-        mToolbar.setTitle(R.string.app_title);
-        setSupportActionBar(mToolbar);
     }
 
     @Override
     protected void initWidget() {
         mArticleBriefFragment = new ArticleBriefFragment();
+        mAboutFragment = new AboutFragment();
         setUpDrawerToggle();
         setUpMenuItemAdapter();
     }
@@ -72,11 +72,20 @@ public class MainActivity extends BaseActivity {
      * 设置menuItemAdapter的内容。
      */
     private void setUpMenuItemAdapter(){
-        MenuItemAdapter adapter = new MenuItemAdapter();
+        mMenuItemAdapter = new MenuItemAdapter();
         //配置Recycler
         mRecyclerSlideMenu.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerSlideMenu.setAdapter(adapter);
+        mRecyclerSlideMenu.setAdapter(mMenuItemAdapter);
+        addMenuItems();
+    }
 
+    private void addMenuItems(){
+        //添加数据到
+        List<MenuItem> menuItemList = new ArrayList<>();
+        menuItemList.add(new MenuItem(R.drawable.article,R.string.article));
+        menuItemList.add(new MenuItem(R.drawable.about,R.string.about));
+        menuItemList.add(new MenuItem(R.drawable.exit,R.string.exit));
+        mMenuItemAdapter.addMenuItems(menuItemList);
     }
 
     @Override
@@ -85,7 +94,6 @@ public class MainActivity extends BaseActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)){
                     mDrawerLayout.closeDrawers();
                 }
@@ -94,20 +102,46 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
+        //设置菜单点击的监听
+        mMenuItemAdapter.setOnItemClickListener(new MenuItemAdapter.OnItemClickListener() {
+            @Override
+            public void itemClick(View view, int pos) {
+
+                switch (pos){
+                    case 0:
+                        //将当前页面改为ArticleFragment
+                        replaceFragment(mArticleBriefFragment);
+                        //关闭DrawerLayout
+                        mDrawerLayout.closeDrawers();
+                        break;
+                    case 1:
+                        //将当前页面改为ArticleFragment
+                        replaceFragment(mAboutFragment);
+                        mDrawerLayout.closeDrawers();
+                        break;
+                    case 2:
+                        finish();
+                        break;
+                }
+            }
+        });
+
     }
 
-    @Override
-    protected void processLogin(Bundle savedInstanceState) {
+    private void replaceFragment(Fragment fragment){
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction()
-                .add(R.id.main_frame_content,mArticleBriefFragment)
+                .replace(R.id.main_frame_content,fragment)
                 .commit();
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater();
-        return super.onCreateOptionsMenu(menu);
+    protected void processLogin(Bundle savedInstanceState) {
+        //设置内容显示的初始化Fragment
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction()
+                .add(R.id.main_frame_content,mArticleBriefFragment)
+                .commit();
     }
 
     @Override

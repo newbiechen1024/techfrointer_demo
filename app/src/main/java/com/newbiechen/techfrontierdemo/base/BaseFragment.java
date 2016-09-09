@@ -7,15 +7,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.newbiechen.techfrontierdemo.HttpUtils.HttpConnection;
+
 /**
  * Created by PC on 2016/9/9.
  */
 public abstract class BaseFragment extends Fragment {
     protected View view ;
+    protected HttpConnection mConnection = HttpConnection.getInstance();
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = onCreateContentView(inflater,container,savedInstanceState);
+        initView();
+        initWidget();
+        initClick();
+        processLogic(savedInstanceState);
         return view;
     }
 

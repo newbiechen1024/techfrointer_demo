@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/article_brief_swipe_refresh"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
+    <com.newbiechen.techfrontierdemo.Widget.AutoLoadingRecyclerView
         android:id="@+id/article_brief_recycler_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
-</LinearLayout>
+        android:layout_height="match_parent"></com.newbiechen.techfrontierdemo.Widget.AutoLoadingRecyclerView>
+</android.support.v4.widget.SwipeRefreshLayout>

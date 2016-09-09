@@ -10,6 +10,11 @@ public class MenuItem {
     private int iconId;
     private int text;
 
+    public MenuItem(int iconId, int text) {
+        this.iconId = iconId;
+        this.text = text;
+    }
+
 
     public int getIconId() {
         return iconId;
