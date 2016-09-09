@@ -1,8 +1,13 @@
-һ��DrawerLayout��ʹ��
-�١���layout.xml��������������໬����
-�ڡ������ActionBar����
-�ۡ��໬��ʾ��رյļ���
+﻿一、DrawerLayout的使用
+①、在layout.xml中设置主界面与侧滑界面
+②、如何与ActionBar关联
+③、侧滑显示与关闭的监听
 
-����Toolbar��ʹ��
-�١���Ҫ��SDK�Ӽ���
-�ڡ���Ҫ������layout.xml�в��滻��Activity��
+二、Toolbar的使用
+①、需要从SDK从加载
+②、需要设置在layout.xml中并替换到Activity上
+
+三、问题
+①、ActionBarToggle的使用
+②、是否要将MenuItem放到Adapter内。
+③、DrawerLayout在layout.xml显示中侧滑栏的样式显示在Activity中

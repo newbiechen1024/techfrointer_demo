@@ -1,4 +1,4 @@
-package com.newbiechen.techfrontierdemo.Base;
+package com.newbiechen.techfrontierdemo.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,20 +23,20 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 初始化View
      */
-    public abstract void onCreateView();
+    protected abstract void onCreateView();
 
     /**
      * 初始化零件
      */
-    public abstract void initWidget();
+    protected abstract void initWidget();
     /**
      * 初始化点击事件
      */
-    public abstract void initClick();
+    protected abstract void initClick();
     /**
      * 逻辑使用区
      */
-    public abstract void processLogin(Bundle savedInstanceState);
+    protected abstract void processLogin(Bundle savedInstanceState);
 
     /**************************公共类*******************************************/
     public <VT> VT getViewById(int id){
