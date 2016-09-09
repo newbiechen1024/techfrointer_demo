@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">开发技术前线</string>
+    <string name="app_title">Android开发技术前线</string>
+    <string name="unLogin">未登录</string>
+</resources>
