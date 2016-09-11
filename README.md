@@ -10,4 +10,4 @@
 - 未采用流行框架，使用的都是原生经过自己封装的网络和数据库框架。可以很好的作为学习使用。
 
 ### 视图展示
-![]https://github.com/newbiechen1024/techfrointer_demo/blob/develop/display/show_techfrontier.gif
+![](https://github.com/newbiechen1024/techfrointer_demo/blob/develop/display/show_techfrontier.gif)
