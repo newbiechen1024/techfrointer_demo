@@ -14,7 +14,7 @@ import com.newbiechen.techfrontierdemo.fragemnt.ArticleInfoFragment;
 
 /**
  * Created by PC on 2016/9/9.
- * 作为ArticleInfoFragment的载体。
+ *
  */
 public class ArticleInfoActivity extends BaseActivity {
     private ArticleInfoFragment mArticleInfoFragment;
