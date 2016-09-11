@@ -1,4 +1,4 @@
-package com.newbiechen.techfrontierdemo.DataBaseUtils;
+package com.newbiechen.techfrontierdemo.dataBaseUtils;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -40,7 +40,7 @@ public class DbOpenHelper extends SQLiteOpenHelper {
             INFO_CONTENT_COL+" TEXT NOT NULL,"+
             "FOREIGN KEY("+INFO_POST_ID_COL+")"+" REFERENCES "+TABLE_ARTICLE_BRIEF+"("+
             BRIEF_POST_ID_COL+"));";
-    private static final String CREATE_TABLE_ARTICLE_BRIEF = "create table "+
+    private static final String CREATE_TABLE_ARTICLE_BRIEF = "CREATE TABLE "+
             TABLE_ARTICLE_BRIEF+" ("+BRIEF_POST_ID_COL+" TEXT PRIMARY KEY,"+
             BRIEF_TITLE_COL+" TEXT NOT NULL,"+
             BRIEF_AUTHOR_COL+" TEXT NOT NULL,"+

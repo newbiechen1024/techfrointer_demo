@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.newbiechen.techfrontierdemo.HttpUtils.HttpConnection;
+import com.newbiechen.techfrontierdemo.httpUtils.HttpConnection;
 
 /**
  * Created by PC on 2016/9/9.

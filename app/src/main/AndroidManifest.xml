@@ -19,7 +19,10 @@
         </activity>
         <activity android:name=".ArticleInfoActivity"
             android:parentActivityName=".MainActivity">
-            <meta-data android:name="com.newbiechen.techfrontierdemo.MainActivity"/>
+            <!--兼容旧版本-->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
         </activity>
     </application>
 

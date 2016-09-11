@@ -98,4 +98,9 @@ public abstract class BaseAdapter <E,VH extends ViewHolder>extends Adapter<VH> {
         removeItems();
         addItems(items);
     }
+
+    public E getItem(int position){
+        return mItemList.get(position);
+    }
 }
+

@@ -14,16 +14,17 @@ import com.newbiechen.techfrontierdemo.fragemnt.ArticleInfoFragment;
 
 /**
  * Created by PC on 2016/9/9.
+ * 作为ArticleInfoFragment的载体。
  */
 public class ArticleInfoActivity extends BaseActivity {
     private ArticleInfoFragment mArticleInfoFragment;
     @Override
-    protected void onCreateView() {
+    protected void onCreateView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_article_info);
     }
 
     @Override
-    protected void initWidget() {
+    protected void initWidget(Bundle savedInstanceState) {
         mArticleInfoFragment = new ArticleInfoFragment();
     }
 

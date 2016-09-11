@@ -27,8 +27,9 @@ public class ArticleBriefAdapter extends BaseAdapter<ArticleBrief,ArticleBriefAd
 
     @Override
     public void setUpViewHolder(ArticleBriefViewHolder holder, int position) {
-        //填充数据
+        //获取数据
         ArticleBrief articleBrief = mItemList.get(position);
+        //填充数据
         holder.tvTitle.setText(articleBrief.getTitle());
         holder.tvAuthor.setText(articleBrief.getAuthor());
         holder.tvDate.setText(articleBrief.getPublishTime());

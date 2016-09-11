@@ -1,9 +1,6 @@
-package com.newbiechen.techfrontierdemo.HttpUtils.ParseData;
+package com.newbiechen.techfrontierdemo.httpUtils.ParseData;
 
-import android.widget.Toast;
-
-import com.newbiechen.techfrontierdemo.HttpUtils.Parse;
-import com.newbiechen.techfrontierdemo.Utils.ToastUtils;
+import com.newbiechen.techfrontierdemo.httpUtils.Parse;
 import com.newbiechen.techfrontierdemo.beans.ArticleBrief;
 
 import org.json.JSONArray;
@@ -11,9 +8,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -28,12 +22,8 @@ public class ArticleBriefParse implements Parse<List<ArticleBrief>> {
             JSONArray jsonArray = new JSONArray(response);
             for (int i=0; i<jsonArray.length(); ++i){
                 JSONObject obj = jsonArray.getJSONObject(i);
-                ArticleBrief articleBrief = new ArticleBrief();
-                articleBrief.setTitle(obj.optString("title"));
-                articleBrief.setAuthor(obj.optString("author"));
-                articleBrief.setPostId(obj.optString("post_id"));
-                articleBrief.setCategory(obj.optString("category"));
-                articleBrief.setPublishTime(obj.optString("date"));
+                //解析数据
+                ArticleBrief articleBrief = parseItem(obj);
                 articleBriefList.add(articleBrief);
             }
         } catch (JSONException e) {
@@ -42,5 +32,14 @@ public class ArticleBriefParse implements Parse<List<ArticleBrief>> {
         return articleBriefList;
     }
 
+    private ArticleBrief parseItem(JSONObject obj){
+        ArticleBrief articleBrief = new ArticleBrief();
+        articleBrief.setTitle(obj.optString("title"));
+        articleBrief.setAuthor(obj.optString("author"));
+        articleBrief.setPostId(obj.optString("post_id"));
+        articleBrief.setCategory(obj.optString("category"));
+        articleBrief.setPublishTime(obj.optString("date"));
+        return articleBrief;
+    }
 
 }

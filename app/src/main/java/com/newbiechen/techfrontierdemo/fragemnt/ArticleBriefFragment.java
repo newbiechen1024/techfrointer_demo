@@ -1,24 +1,21 @@
 package com.newbiechen.techfrontierdemo.fragemnt;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.newbiechen.techfrontierdemo.ArticleInfoActivity;
-import com.newbiechen.techfrontierdemo.Dao.ArticleBriefDao;
-import com.newbiechen.techfrontierdemo.HttpUtils.HttpConnection;
-import com.newbiechen.techfrontierdemo.HttpUtils.ParseData.ArticleBriefParse;
+import com.newbiechen.techfrontierdemo.dao.ArticleBriefDao;
+import com.newbiechen.techfrontierdemo.httpUtils.HttpConnection;
+import com.newbiechen.techfrontierdemo.httpUtils.ParseData.ArticleBriefParse;
 import com.newbiechen.techfrontierdemo.R;
-import com.newbiechen.techfrontierdemo.Widget.AutoLoadingRecyclerView;
+import com.newbiechen.techfrontierdemo.widget.AutoLoadingRecyclerView;
 import com.newbiechen.techfrontierdemo.adapters.ArticleBriefAdapter;
 import com.newbiechen.techfrontierdemo.base.BaseAdapter;
 import com.newbiechen.techfrontierdemo.base.BaseFragment;
@@ -53,20 +50,18 @@ public class ArticleBriefFragment extends BaseFragment implements SwipeRefreshLa
     @Override
     public void onResume() {
         super.onResume();
-        //先从数据库获取数据
-        mAdapter.addItems(mBriefDao.getArticleBriefs("20","0"));
         //从网络获取数据
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                //自动滚动。
+                //自动加载动画
                 mSwipeRefreshLayout.post(new Runnable() {
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
                     }
                 });
-               //加载数据
+                //加载数据
                 onRefresh();
             }
         });
@@ -91,7 +86,9 @@ public class ArticleBriefFragment extends BaseFragment implements SwipeRefreshLa
             @Override
             public void itemClick(View view, int pos) {
                 //跳转
+                ArticleBrief articleBrief = mAdapter.getItem(pos);
                 Intent intent = new Intent(getContext(), ArticleInfoActivity.class);
+                intent.putExtra(ArticleInfoFragment.EXTRA_POST_ID,articleBrief.getPostId());
                 startActivity(intent);
             }
         });
@@ -100,6 +97,8 @@ public class ArticleBriefFragment extends BaseFragment implements SwipeRefreshLa
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
+        //先从数据库获取数据
+        mAdapter.addItems(mBriefDao.getArticleBriefs("20","0"));
     }
 
     private URL getUrl(){
@@ -121,7 +120,7 @@ public class ArticleBriefFragment extends BaseFragment implements SwipeRefreshLa
             @Override
             public void callback(List<ArticleBrief> data) {
                 mAdapter.refreshItems(data);
-                mBriefDao.addArticleBriefs2Db(data);
+                mBriefDao.addArticleBrievies2Db(data);
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -135,7 +134,7 @@ public class ArticleBriefFragment extends BaseFragment implements SwipeRefreshLa
             @Override
             public void callback(List<ArticleBrief> data) {
                 mAdapter.addItems(data);
-                mBriefDao.addArticleBriefs2Db(data);
+                mBriefDao.addArticleBrievies2Db(data);
                 mRecyclerView.setLoadMoreFinish(true);
             }
         });

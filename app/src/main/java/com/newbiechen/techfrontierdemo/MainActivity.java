@@ -10,10 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.newbiechen.techfrontierdemo.adapters.MenuItemAdapter;
 import com.newbiechen.techfrontierdemo.base.BaseActivity;
@@ -23,9 +20,11 @@ import com.newbiechen.techfrontierdemo.fragemnt.ArticleBriefFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
 public class MainActivity extends BaseActivity {
+    //当app重新创建的时候的bundle
+    private static final String BUNDLE_FRAGMENT = "current_fragment";
+
     private Toolbar mToolbar;
     private RecyclerView mRecyclerSlideMenu;
     private MenuItemAdapter mMenuItemAdapter;
@@ -33,8 +32,11 @@ public class MainActivity extends BaseActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private ArticleBriefFragment mArticleBriefFragment;
     private AboutFragment mAboutFragment;
+    //当前的Fragment
+    private Fragment mCurrentFragment;
+
     @Override
-    protected void onCreateView() {
+    protected void onCreateView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
 
         mToolbar = getViewById(R.id.toolbar);
@@ -43,11 +45,10 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void initWidget() {
-        mArticleBriefFragment = new ArticleBriefFragment();
-        mAboutFragment = new AboutFragment();
+    protected void initWidget(Bundle savedInstanceState) {
         setUpDrawerToggle();
         setUpMenuItemAdapter();
+        setUpFragments(savedInstanceState);
     }
 
     /**
@@ -60,8 +61,6 @@ public class MainActivity extends BaseActivity {
         mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout,
                 R.string.drawer_open,
                 R.string.drawer_close);
-        //表示是否显示默认的home键
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //表示home键是否可点击。
         getSupportActionBar().setHomeButtonEnabled(true);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
@@ -79,6 +78,33 @@ public class MainActivity extends BaseActivity {
         addMenuItems();
     }
 
+    private void setUpFragments(Bundle savedInstanceState){
+        /**
+         * 防止产生Fragment的重影
+         */
+        if (savedInstanceState == null){
+            //自己创建
+            mArticleBriefFragment = new ArticleBriefFragment();
+            mAboutFragment = new AboutFragment();
+            //将Fragment添加到FragmentManager中，并显示
+            addFragment();
+        }
+        else {
+            //当Activity重新创建的时候，从FragmentManager中获取Fragment，不要自己重新创建
+            //否则会造成重影的问题
+            mArticleBriefFragment = (ArticleBriefFragment) getSupportFragmentManager().
+                    findFragmentByTag(ArticleBriefFragment.class.getSimpleName());
+            mAboutFragment = (AboutFragment) getSupportFragmentManager().
+                    findFragmentByTag(AboutFragment.class.getSimpleName());
+            //当恢复的时候，当前显示的Fragment
+            mCurrentFragment = getSupportFragmentManager().
+                    findFragmentByTag(savedInstanceState.getString(BUNDLE_FRAGMENT));
+        }
+    }
+
+    /**
+     * 添加侧滑栏的菜单按钮
+     */
     private void addMenuItems(){
         //添加数据到
         List<MenuItem> menuItemList = new ArrayList<>();
@@ -110,13 +136,13 @@ public class MainActivity extends BaseActivity {
                 switch (pos){
                     case 0:
                         //将当前页面改为ArticleFragment
-                        replaceFragment(mArticleBriefFragment);
+                        changeFragment(mArticleBriefFragment);
                         //关闭DrawerLayout
                         mDrawerLayout.closeDrawers();
                         break;
                     case 1:
                         //将当前页面改为ArticleFragment
-                        replaceFragment(mAboutFragment);
+                        changeFragment(mAboutFragment);
                         mDrawerLayout.closeDrawers();
                         break;
                     case 2:
@@ -128,20 +154,30 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    private void replaceFragment(Fragment fragment){
+    private void addFragment(){
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.main_frame_content,mArticleBriefFragment,ArticleBriefFragment.class.getSimpleName())
+                .add(R.id.main_frame_content,mAboutFragment,AboutFragment.class.getSimpleName())
+                .hide(mAboutFragment)
+                .commit();
+        mCurrentFragment = mArticleBriefFragment;
+    }
+
+    /**
+     * 切换Fragment
+     * @param fragment
+     */
+    private void changeFragment(Fragment fragment){
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction()
-                .replace(R.id.main_frame_content,fragment)
+                .hide(mCurrentFragment)
+                .show(fragment)
                 .commit();
+        mCurrentFragment = fragment;
     }
 
     @Override
     protected void processLogin(Bundle savedInstanceState) {
-        //设置内容显示的初始化Fragment
-        FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction()
-                .add(R.id.main_frame_content,mArticleBriefFragment)
-                .commit();
     }
 
     @Override
@@ -149,5 +185,11 @@ public class MainActivity extends BaseActivity {
         super.onPostCreate(savedInstanceState);
         // 在onRestoreInstanceState发生后，同步触发器状态.
         mDrawerToggle.syncState();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(BUNDLE_FRAGMENT,mCurrentFragment.getTag());
     }
 }

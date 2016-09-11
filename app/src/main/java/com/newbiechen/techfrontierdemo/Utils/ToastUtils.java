@@ -1,4 +1,4 @@
-package com.newbiechen.techfrontierdemo.Utils;
+package com.newbiechen.techfrontierdemo.utils;
 
 import android.content.Context;
 import android.widget.Toast;

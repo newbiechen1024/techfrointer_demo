@@ -15,9 +15,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        onCreateView();
+        onCreateView(savedInstanceState);
         setUpToolBar();
-        initWidget();
+        initWidget(savedInstanceState);
         initClick();
         processLogin(savedInstanceState);
     }
@@ -27,19 +27,23 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     private void setUpToolBar(){
         mToolbar = getViewById(R.id.toolbar);
+        //将Toolbar关联到Activity,记得先将Activity自带的Toolbar取消掉
         setSupportActionBar(mToolbar);
         mToolbar.setTitle(R.string.app_title);
+        //表示是否显示默认的home键
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
     /************************需要继承的抽象类************************************/
     /**
      * 初始化View
      */
-    protected abstract void onCreateView();
+    protected abstract void onCreateView(Bundle savedInstanceState);
 
     /**
      * 初始化零件
      */
-    protected abstract void initWidget();
+    protected abstract void initWidget(Bundle savedInstanceState);
     /**
      * 初始化点击事件
      */

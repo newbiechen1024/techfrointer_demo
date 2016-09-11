@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.newbiechen.techfrontierdemo.Widget.AutoLoadingRecyclerView
+    <com.newbiechen.techfrontierdemo.widget.AutoLoadingRecyclerView
         android:id="@+id/article_brief_recycler_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></com.newbiechen.techfrontierdemo.Widget.AutoLoadingRecyclerView>
+        android:layout_height="match_parent"></com.newbiechen.techfrontierdemo.widget.AutoLoadingRecyclerView>
 </android.support.v4.widget.SwipeRefreshLayout>

@@ -1,4 +1,4 @@
-package com.newbiechen.techfrontierdemo.HttpUtils;
+package com.newbiechen.techfrontierdemo.httpUtils;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -7,7 +7,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -50,11 +49,8 @@ public class HttpConnection {
                 String response = null;
                 HttpURLConnection connection = null;
                 try {
-                    //配置
-                    connection = (HttpURLConnection) url.openConnection();
-                    connection.setDoInput(true);
-                    connection.setConnectTimeout(HttpConfig.TIME_OUT);
-                    connection.setReadTimeout(HttpConfig.READ_OUT);
+                    //配置Connection，并连接到网络
+                    connection = setUpConnection(url);
                     //获取数据
                     response = getData(connection.getInputStream());
                     Log.d(TAG,response);
@@ -71,10 +67,21 @@ public class HttpConnection {
             @Override
             protected void onPostExecute(T aVoid) {
                 super.onPostExecute(aVoid);
+                //回调。
                 callBack.callback(aVoid);
             }
         }.execute();
     }
+
+    private HttpURLConnection setUpConnection(URL url) throws IOException{
+        //配置
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setDoInput(true);
+        connection.setConnectTimeout(HttpConfig.TIME_OUT);
+        connection.setReadTimeout(HttpConfig.READ_OUT);
+        return connection;
+    }
+
 
     private String getData(InputStream inputStream){
         BufferedReader reader = new BufferedReader(

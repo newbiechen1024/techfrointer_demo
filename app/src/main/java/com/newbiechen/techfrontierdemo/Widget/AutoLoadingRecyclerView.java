@@ -1,4 +1,4 @@
-package com.newbiechen.techfrontierdemo.Widget;
+package com.newbiechen.techfrontierdemo.widget;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
