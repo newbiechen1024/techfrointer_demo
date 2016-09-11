@@ -11,3 +11,6 @@
 
 ### 视图展示
 ![](https://github.com/newbiechen1024/techfrointer_demo/blob/develop/display/show_techfrontier.gif)
+
+## 遇到的问题：(自己写的博客)
+- DrawerLayout的使用：
