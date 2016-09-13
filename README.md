@@ -13,4 +13,6 @@
 ![](https://github.com/newbiechen1024/techfrointer_demo/blob/develop/display/show_techfrontier.gif)
 
 ## 遇到的问题：(自己写的博客)
-- DrawerLayout的使用：
+- [DrawerLayout的使用](http://blog.csdn.net/chen19960724/article/details/52503830)
+- [Toolbar的使用](http://blog.csdn.net/chen19960724/article/details/52504515)
+- [Toolbar的高级性能](http://blog.csdn.net/chen19960724/article/details/52516169)
