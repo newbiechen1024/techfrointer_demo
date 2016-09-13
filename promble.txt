@@ -1,19 +1,19 @@
-﻿一、DrawerLayout的使用
+﻿一、DrawerLayout的使用（完成）
 ①、在layout.xml中设置主界面与侧滑界面
 ②、如何与ActionBar关联
 ③、侧滑显示与关闭的监听
 
 
-二、Toolbar的使用
+二、Toolbar的使用（完成）
 ①、需要从SDK从加载
 ②、需要设置在layout.xml中并替换到Activity上
 ③、利用Toolbar设置返回键
 
 三、问题
-①、ActionBarToggle的使用
-②、是否要将MenuItem放到Adapter内。
-③、DrawerLayout在layout.xml显示中侧滑栏的样式显示在Activity中
-④、实现上划加载RecyclerView的原理
+①、ActionBarToggle的使用（完成）
+②、是否要将MenuItem放到Adapter内。（不能这样，因为放到内部，很多点击事件无法完成）
+③、DrawerLayout在layout.xml显示中侧滑栏的样式显示在Activity中（设置android:layout_gravity="left"）
+④、实现上划加载RecyclerView的原理（利用LinearLayoutManager判定是否滑到最后，如果滑动最后则设置回调方法，在该方法内启动加载）
 
 四、架构
 ①、定义Activity与Fragment的逻辑层
@@ -28,7 +28,7 @@
 ③、修改WebView的点击事件或者回调事件
 ④、设置WebView的缓存。
 
-六、Fragment的问题
+六、Fragment的问题(完成)
 ①、Fragment被加载到FrameLayout中
 ②、Fragment出现重影的原因和解决方法
 ③、Fragment与Activity的交互
