@@ -14,7 +14,6 @@ import com.newbiechen.techfrontierdemo.httpUtils.HttpConnection;
  */
 public abstract class BaseFragment extends Fragment {
     protected View view ;
-    protected HttpConnection mConnection = HttpConnection.getInstance();
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

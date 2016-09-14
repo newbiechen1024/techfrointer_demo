@@ -69,7 +69,7 @@ public class ArticleBriefDao {
      * 获取20条数据
      * @return
      */
-    public List<ArticleBrief> getArticleBriefs(String count,String offset){
+    public List<ArticleBrief> getArticleBriefs(int count,int offset){
         List<ArticleBrief> articleBriefList = new ArrayList<>();
         Cursor cursor = mDataBase.query(DbOpenHelper.TABLE_ARTICLE_BRIEF,
                 null,null,null,null,null,null,count+","+offset);

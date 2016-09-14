@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 
 /**
  * Created by PC on 2016/9/9.
@@ -59,6 +60,7 @@ public class AutoLoadingRecyclerView extends RecyclerView {
                 dy > 0 && isLoading && isFinish){
             //启动加载更多的回调
             mLoadMoreListener.onLoadMore();
+            Log.d("RecyclerView","加载");
             isFinish = false;
         }
     }
